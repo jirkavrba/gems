@@ -1,2 +1,24 @@
 bot:
   token: ${DISCORD_TOKEN}
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATABASE_URL:localhost:5432/gems}
+    username: ${DATABASE_USERNAME:gems}
+    password: ${DATABASE_PASSWORD:gems}
+    driver-class-name: org.postgresql.Driver
+
+  r2dbc:
+    url: r2dbc:postgres://${DATABASE_URL:localhost:5432/gems}
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    pool:
+      enabled: true
+      initial-size: 4
+      max-size: 4
+
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    driver-class-name: ${spring.datasource.driver-class-name}
